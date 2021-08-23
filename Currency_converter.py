@@ -8,21 +8,21 @@ last_updated = "11/08/2021 14:10"
 still_converting = True
 
 
-def calculate_converted_value(currency_from, currency_to, value):
-    currency_from_position = currency_list.index(currency_from)
-    currency_to_position = currency_list.index(currency_to)
-    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]  # $1 to = from
-    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]
-    answer = float("{:.2f}".format(rate * value))
+def calculate_converted_value(currency_from, currency_to, value):       # calculates the exchange rate and multiplies it with the amount to get an answer
+    currency_from_position = currency_list.index(currency_from)         # finds the position value of the currency chosen by the user (from)
+    currency_to_position = currency_list.index(currency_to)             # finds the position value of the currency chosen by the user (to)
+    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]                # finds the exchange rate from to   $1 from = ~ to
+    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]       # finds the reversed exchange rate to from   $1 to = ~ from
+    answer = float("{:.2f}".format(rate * value))       # finds the answer by multiplying it
     return rate, reversed_rate, answer
 
 
-def calculate_reversed_converted_value(currency_from, currency_to, value):
-    currency_from_position = currency_list.index(currency_from)
-    currency_to_position = currency_list.index(currency_to)
-    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]
-    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]  # $1 to = from
-    reversed_answer = float("{:.2f}".format(reversed_rate * value))
+def calculate_reversed_converted_value(currency_from, currency_to, value):      # calculates the exchange rate and multiplies it with the amount to get an answer
+    currency_from_position = currency_list.index(currency_from)                 # finds the position value of the currency chosen by the user (from)
+    currency_to_position = currency_list.index(currency_to)                     # finds the position value of the currency chosen by the user (to)
+    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]       # finds the reversed exchange rate to from   $1 to = ~ from
+    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]                # finds the exchange rate from to   $1 from = ~ to
+    reversed_answer = float("{:.2f}".format(reversed_rate * value))     # finds the answer by multiplying it
     return reversed_rate, rate, reversed_answer
 
 
@@ -55,11 +55,15 @@ while still_converting:     # while user wants to keep converting, run the loop
             print("Please enter a valid input")
 
     exchange_rate, reversed_exchange_rate, converted_value = calculate_converted_value(selected_currency_from, selected_currency_to, converting_value)
-    print("The outcome of your conversion from {0} to {1} of {2} is {3} at {4}. \n"
-          "The exchange rate from {0} to {1} is {5}. \n"
-          "The exchange rate from {1} to {0} is {6}.".format(selected_currency_from, selected_currency_to, converting_value, converted_value, last_updated, exchange_rate, reversed_exchange_rate))
+    print("---------------------------------------------------------\n"     # print out the answer and the exchange rates
+          "As of {4} the outcome of your conversion is: \n"
+          "{2} {0} = {3} {1} \n"
+          "1 {0} = {5} {1} \n"
+          "1 {1} = {6} {0} ".format(selected_currency_from, selected_currency_to, converting_value, converted_value, last_updated, exchange_rate, reversed_exchange_rate))
 
     reversed_exchange_rate, exchange_rate, reversed_converted_value = calculate_reversed_converted_value(selected_currency_from, selected_currency_to, converting_value)
-    print("The outcome of your conversion from {1} to {0} of {2} is {3} at {4}. \n"
-          "The exchange rate from {0} to {1} is {5}. \n"
-          "The exchange rate from {1} to {0} is {6}.".format(selected_currency_from, selected_currency_to, converting_value, reversed_converted_value, last_updated, exchange_rate, reversed_exchange_rate))
+    print("---------------------------------------------------------\n"     # print out the answer and the exchange rates
+          "As of {4} the outcome of your conversion is: \n"
+          "{2} {1} = {3} {0} \n"
+          "1 {1} = {5} {0} \n"
+          "1 {0} = {6} {1} ".format(selected_currency_from, selected_currency_to, converting_value, reversed_converted_value, last_updated, exchange_rate, reversed_exchange_rate))
