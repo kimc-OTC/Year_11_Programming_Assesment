@@ -61,9 +61,17 @@ while still_converting:     # while user wants to keep converting, run the loop
           "1 {0} = {5} {1} \n"
           "1 {1} = {6} {0} ".format(selected_currency_from, selected_currency_to, converting_value, converted_value, last_updated, exchange_rate, reversed_exchange_rate))
 
-    reversed_exchange_rate, exchange_rate, reversed_converted_value = calculate_reversed_converted_value(selected_currency_from, selected_currency_to, converting_value)
-    print("---------------------------------------------------------\n"     # print out the answer and the exchange rates
-          "As of {4} the outcome of your conversion is: \n"
-          "{2} {1} = {3} {0} \n"
-          "1 {1} = {5} {0} \n"
-          "1 {0} = {6} {1} ".format(selected_currency_from, selected_currency_to, converting_value, reversed_converted_value, last_updated, exchange_rate, reversed_exchange_rate))
+    while True:     # this loop forces the user to enter a valid input
+        choice_reverse = input("Do you want to know the reverse value? Type Y for yes and N for no").strip().upper()
+        if choice_reverse == "Y":       # if user wants to know the reverse value then run the if statement
+            reversed_exchange_rate, exchange_rate, reversed_converted_value = calculate_reversed_converted_value(selected_currency_from, selected_currency_to, converting_value)
+            print("---------------------------------------------------------\n"     # print out the answer and the exchange rates
+                  "As of {4} the outcome of your conversion is: \n"
+                  "{2} {1} = {3} {0} \n"
+                  "1 {1} = {5} {0} \n"
+                  "1 {0} = {6} {1} ".format(selected_currency_from, selected_currency_to, converting_value, reversed_converted_value, last_updated, exchange_rate, reversed_exchange_rate))
+            break       # prevents infinite loop
+        elif choice_reverse == "N":
+            break       # because user doesn't want it, exit the loop
+        else:           # asks for a valid input
+            print("Please enter either Y or N")
