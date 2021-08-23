@@ -7,6 +7,25 @@ exchange_rate_list = [0.7, 0.6, 76.95, 0.5, 0.95, 0.88, 0.64, 4.52, 6.07, 1, 14,
 last_updated = "11/08/2021 14:10"
 still_converting = True
 
+
+def calculate_converted_value(currency_from, currency_to, value):
+    currency_from_position = currency_list.index(currency_from)
+    currency_to_position = currency_list.index(currency_to)
+    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]  # $1 to = from
+    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]
+    answer = float("{:.2f}".format(rate * value))
+    return rate, reversed_rate, answer
+
+
+def calculate_reversed_converted_value(currency_from, currency_to, value):
+    currency_from_position = currency_list.index(currency_from)
+    currency_to_position = currency_list.index(currency_to)
+    reversed_rate = exchange_rate_list[currency_from_position] / exchange_rate_list[currency_to_position]
+    rate = exchange_rate_list[currency_to_position] / exchange_rate_list[currency_from_position]  # $1 to = from
+    reversed_answer = float("{:.2f}".format(reversed_rate * value))
+    return reversed_rate, rate, reversed_answer
+
+
 while still_converting:     # while user wants to keep converting, run the loop
     print("These are the currencies available for converting: \n"
           "US Dollar (USD), Euro (EUR), Yen (JPY), Pound Sterling (GBP), Australian Dollar (AUD), Canadian (CAD), Swiss Franc (CHF), Chinese Renminbi (CNY), Swedish Krona (SEK), New Zealand Dollar (NZD), Mexican Peso (MEX), Singapore Dollar (SGD), Hong Kong Dollar (HKD), Norwegian Krone (NOK), South Korea Won (KRW), Turkish Lira (TRY), Indian Rupee (INR), Russian Ruble (RUB), Brazilian Real (BRL), South African Rand (ZAR)")
@@ -34,3 +53,13 @@ while still_converting:     # while user wants to keep converting, run the loop
                 break
         except ValueError:      # when the input is not a string, it prints out an error message and rerun the loop
             print("Please enter a valid input")
+
+    exchange_rate, reversed_exchange_rate, converted_value = calculate_converted_value(selected_currency_from, selected_currency_to, converting_value)
+    print("The outcome of your conversion from {0} to {1} of {2} is {3} at {4}. \n"
+          "The exchange rate from {0} to {1} is {5}. \n"
+          "The exchange rate from {1} to {0} is {6}.".format(selected_currency_from, selected_currency_to, converting_value, converted_value, last_updated, exchange_rate, reversed_exchange_rate))
+
+    reversed_exchange_rate, exchange_rate, reversed_converted_value = calculate_reversed_converted_value(selected_currency_from, selected_currency_to, converting_value)
+    print("The outcome of your conversion from {1} to {0} of {2} is {3} at {4}. \n"
+          "The exchange rate from {0} to {1} is {5}. \n"
+          "The exchange rate from {1} to {0} is {6}.".format(selected_currency_from, selected_currency_to, converting_value, reversed_converted_value, last_updated, exchange_rate, reversed_exchange_rate))
