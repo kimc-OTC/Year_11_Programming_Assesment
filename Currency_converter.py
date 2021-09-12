@@ -66,7 +66,7 @@ while still_converting:     # while user wants to keep converting, run the loop
     while True:     # this loop forces the user to enter a valid input
         try:        # when user enters a number, it will try to convert it using float
             converting_value = float(input("Please enter an amount that you would like to convert: "))
-            if converting_value < 0:        # checks if the amount is in the right range
+            if converting_value <= 0:        # checks if the amount is in the right range
                 print("Please enter a value larger than 0.")     # if not, ask the user to enter an amount in the right range
             else:
                 break
